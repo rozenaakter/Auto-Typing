@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+    <h1>Coding is <span></span></h1>
+    
+    <script>
+        const dynamicText = document.querySelector('h1 span');
+        const words = ['Love', 'Like Art', 'The Future', 'Everything'];
+        
+        let wordIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        
+        const typeEffect = () => {
+            const currentWord = words[wordIndex];
+            
+            if (!isDeleting) {
+                // Typing
+                const currentChar = currentWord.substring(0, charIndex + 1);
+                dynamicText.textContent = currentChar;
+                charIndex++;
+                
+                // Move to deleting after typing complete
+                if (charIndex === currentWord.length) {
+                    isDeleting = true;
+                    setTimeout(typeEffect, 1000); // Wait before deleting
+                } else {
+                    setTimeout(typeEffect, 2000); // Type next character
+                }
+            } else {
+                // Deleting
+                const currentChar = currentWord.substring(0, charIndex - 1);
+                dynamicText.textContent = currentChar;
+                charIndex--;
+                
+                // Move to next word after deleting complete
+                if (charIndex === 0) {
+                    isDeleting = false;
+                    wordIndex++;
+                    // Loop back to the start
+                    if (wordIndex === words.length) {
+                        wordIndex = 0;
+                    }
+                    setTimeout(typeEffect, 200); // Delay before typing next word
+                } else {
+                    setTimeout(typeEffect, 200); // Delete next character
+                }
+            }
+        }
+        
+        // Start typing effect
+        typeEffect();
+    </script>
+</body>
+</html>
